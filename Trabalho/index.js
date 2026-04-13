@@ -146,23 +146,19 @@ app.post('/api/filmes', (req, res) => {
 
 // PUT
 app.put('/api/filmes/:id', (req, res) => {
-    // 1. Pegar ID da URL
+
     const id = parseInt(req.params.id);
     
-    // 2. Buscar filme no array
     const filme = filmes.find(p => p.id === id);
-    
-    // 3. Verificar se existe
+  
     if (!filme) {
         return res.status(404).json({ 
             erro: "filme não encontrado" 
         });
     }
     
-    // 4. Extrair dados do body
     const { titulo, ano, diretor, genero, nota} = req.body;
     
-    // 5. VALIDAÇÕES (igual ao POST!)
     if (!titulo || !ano || !diretor ||!genero) {
         return res.status(400).json({
             erro: "Campos obrigatórios: titulo, ano, diretor e genero"
@@ -175,15 +171,12 @@ app.put('/api/filmes/:id', (req, res) => {
         });
     }
     
-    // 6. Atualizar campos do filme
     filme.titulo = titulo;
     filme.ano = ano;
     filme.diretor = diretor;
     filme.genero = genero;
     filme.nota = nota;
 
-    
-    // 7. Retornar filme atualizado com 200 OK
     res.json(filme);
 });
                         
