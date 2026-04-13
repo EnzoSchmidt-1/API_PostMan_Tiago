@@ -179,6 +179,23 @@ app.put('/api/filmes/:id', (req, res) => {
 
     res.json(filme);
 });
+
+// DELETE
+app.delete('/api/filmes/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    
+    const index = filmes.findIndex(p => p.id === id);
+    
+    if (index === -1) {
+        return res.status(404).json({ 
+            erro: "filme não encontrado" 
+        });
+    }
+    
+    filmes.splice(index, 1);
+    
+    res.status(204).send();
+});
                         
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
