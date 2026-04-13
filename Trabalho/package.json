@@ -1,20 +1,28 @@
 {
-  "name": "api-filmes",
+  "dependencies": {
+    "express": "^5.2.1",
+    "node.js": "^0.0.1-security"
+  },
+  "name": "api_postman_tiago",
   "version": "1.0.0",
-  "description": "",
+  "description": "Repositório criado para a Atividade de API's",
   "main": "index.js",
+  "devDependencies": {},
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EnzoSchmidt-1/API_PostMan_Tiago.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "dependencies": {
-    "express": "^5.2.1"
+  "bugs": {
+    "url": "https://github.com/EnzoSchmidt-1/API_PostMan_Tiago/issues"
   },
-  "devDependencies": {
-    "nodemon": "^3.1.14"
-  }
+  "homepage": "https://github.com/EnzoSchmidt-1/API_PostMan_Tiago#readme"
 }

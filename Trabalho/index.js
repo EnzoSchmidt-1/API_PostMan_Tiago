@@ -1,11 +1,7 @@
 const express = require('express');
-
 const app = express();
-
-const PORT = 3000;
-
+const PORT = 3001;
 app.use(express.json());
-
 
 
 const filmes = [
@@ -84,15 +80,18 @@ const filmes = [
     ano: 1999, 
     diretor: "David Fincher", 
     genero: "Drama",
-    Nota : 9},
+    nota : 9},
 
 ];
 
+//-----------------------------------------------------------------------------------
+//GET's
 app.get('/api/filmes/:id', (req, res) => {
   const idBusca = parseInt(req.params.id);
   const filme = filmes.find(f => f.id === idBusca);
 
   if (!filme) return res.status(404).json({ erro: "Filme não encontrado" });
+
   res.json(filme);
 });
 
@@ -100,7 +99,7 @@ app.get('/api/filmes/:id', (req, res) => {
 app.get('/api/filmes', (req, res) => {
   let resultado = [...filmes]; 
 
-  const { genero, sort, order, page, limit } = req.query;
+  const { genero, sort, order } = req.query;
 
   if (genero) {
     resultado = resultado.filter(f => f.genero.toLowerCase() === genero.toLowerCase());
@@ -115,6 +114,8 @@ app.get('/api/filmes', (req, res) => {
       return valA > valB ? 1 : -1;
     });
   }
+
+  res.json(resultado); 
 });
 
 app.get('/api/filmes', (req, res) => {
@@ -122,8 +123,9 @@ app.get('/api/filmes', (req, res) => {
     res.json({filmes});
 
 });
+//-------------------------------------------------------------------------------------
 
-
+// POST
 app.post('/api/filmes', (req, res) => {
   const novoFilme = {
     id: filmes.length > 0 ? filmes[filmes.length - 1].id + 1 : 1,
@@ -142,7 +144,42 @@ app.post('/api/filmes', (req, res) => {
   res.status(201).json(novoFilme);
 });
 
+// PUT
+app.put('/api/filmes/:id', (req, res) => {
 
+    const id = parseInt(req.params.id);
+    
+    const filme = filmes.find(p => p.id === id);
+  
+    if (!filme) {
+        return res.status(404).json({ 
+            erro: "filme não encontrado" 
+        });
+    }
+    
+    const { titulo, ano, diretor, genero, nota} = req.body;
+    
+    if (!titulo || !ano || !diretor ||!genero) {
+        return res.status(400).json({
+            erro: "Campos obrigatórios: titulo, ano, diretor e genero"
+        });
+    }
+    
+    if (typeof ano !== 'number' || ano <= 0) {
+        return res.status(400).json({
+            erro: "O ano de criação deve ser um número positivo"
+        });
+    }
+    
+    filme.titulo = titulo;
+    filme.ano = ano;
+    filme.diretor = diretor;
+    filme.genero = genero;
+    filme.nota = nota;
+
+    res.json(filme);
+});
+                        
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
